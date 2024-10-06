@@ -2,8 +2,8 @@ org $8080
 
 ;input variables
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-line_x1:	defb 50 		;$8080	line start point X
-line_y1:	defb 0 		;$8082	line start point Y
+line_x1:	defb 15 		;$8080	line start point X
+line_y1:	defb 15 		;$8082	line start point Y
 line_x2:	defb 0  	;$8084	line end point X
 line_y2:	defb 0  	;$8086	line end point Y
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

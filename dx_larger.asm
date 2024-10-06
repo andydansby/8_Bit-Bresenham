@@ -10,7 +10,6 @@ dxLarger:
     ld A, (deltaX)     ; load deltaX into register A
     srl A              ; shift right to divide by 2
     ld H, A            ; store the result in register H (deltaX / 2)
-
     ld A, (deltaY)     ; load deltaY into register A
     sub H              ; subtract (deltaX / 2)
     ld (fraction), A   ; store the result in fraction
@@ -35,7 +34,6 @@ DX_iteration_loop:
     ; Code for the loop body goes here
 
     ;plot or point code goes here
-
     ld A, (line_x1)
     ld (plot_x), A
     ld A, (line_y1)
@@ -43,27 +41,15 @@ DX_iteration_loop:
     call _joffa_pixel2
     ;ATTENTION, need to rework, so that HL is _gfx_xy and save those cycles
 
-
-
-
-
-
 ;if (fraction >= 0)
     ld A, (fraction)           ; Load fraction into A
     ; check to see if fraction is less than 0
     bit 7, A
     jp m, DX_fraction_negative  ;check Sign flag
 
-
 ; only if fraction is Greater than 0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;inside IF
 ; fraction -= deltaX
-    ;fraction is already in HL
-    ;ld DE, (deltaX)
-    ;xor A
-    ;sbc HL, DE
-    ;ld (fraction), HL
-
     ld A, (deltaX)
     ld H, A
     ld A, (fraction)
@@ -72,26 +58,7 @@ DX_iteration_loop:
     ;;answer
 
 
-
-
-
-
-;<<<<<<    WORKING ON      >>>>>>
-
-
-
-
 ;line_y1 += stepY;
-    ;ld a, (stepY)
-    ;ld hl, (line_y1) ; Load line_y1 into HL
-
-    ; Load stepY into E and clear D
-    ;ld e, a          ; Load stepY into E
-    ;xor a            ; clear D
-    ;ld d, a          ;
-
-    ;add hl, de
-    ;ld (line_y1), hl    ;save answer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;inside IF
     ld A, (stepY)
     ld H, A
@@ -100,24 +67,11 @@ DX_iteration_loop:
     ld (line_y1), A    ;save answer
     ;answer
 
-;<<<<<<    STOP      >>>>>>
-    ;jp increase_deltaX_iterations; early out??? ATTENTION
-
-
-
 
 ;if fraction is less than 0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;outside IF
 DX_fraction_negative:
 ; line_x1 += stepX
-    ;xor A           ; set D to 0
-    ;ld D, A
-    ;ld A, (stepX)   ; Load stepX into E
-    ;ld E, A
-    ;ld HL, (line_x1); Load line_x1 into HL
-    ;add HL, DE
-    ;ld (line_x1), HL; answer
-
     ld A, (stepX)
     ld H, A
     ld A, (line_x1)
@@ -125,44 +79,13 @@ DX_fraction_negative:
     ld (line_x1), A
     ;answer
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;fraction += deltaY;
-    ;ld HL, (fraction)
-    ;ld DE, (deltaY)
-    ;add HL, DE
-    ;ld (fraction), HL
-
     ld A, (fraction)
     ld H, A
     ld A, (deltaY)
     add A, H
     ld (fraction), A
     ;answer
-
-
-
-
-
-
-
-
-
-
 
 ; iterations++
     ;increase iterations, place just before deltaX_iteration_end
