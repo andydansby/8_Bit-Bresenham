@@ -123,13 +123,6 @@ set_deltaY_MAX:
 steps_answer:
     ; steps now contains the maximum of deltaX and deltaY
 
-
-
-
-
-;<<<<<<    STOP      >>>>>>
-
-;<<<<<<    WORKING ON      >>>>>>
 DYorDY_start:
 	xor A				;clear flags
 	ld A, (deltaX)
@@ -158,7 +151,7 @@ DYorDY_start:
                         ;$9300
     jp dyLarger
 
-;<<<<<<    WORKING ON      >>>>>>
+
 
 PUBLIC bresenham_end
 bresenham_end:

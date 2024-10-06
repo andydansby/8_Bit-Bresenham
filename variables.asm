@@ -32,13 +32,19 @@ PUBLIC steps
 iterations:	defb 00
 
 
-PUBLIC plot_x			;$809A
+PUBLIC plot_x			;$
 plot_x:		defb 00
 
-PUBLIC plot_y			;$809B
+PUBLIC plot_y			;$
 plot_y:		defb 00
 
-PUBLIC X_PositionBits	;$80A5
+
+PUBLIC _gfx_xy
+_gfx_xy:		defw 0000
+
+
+
+PUBLIC X_PositionBits	;$
 X_PositionBits:
 defb 128,64,32,16,8,4,2,1
 

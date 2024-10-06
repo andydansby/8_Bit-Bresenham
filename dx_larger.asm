@@ -7,27 +7,22 @@ jp dxLarger
 
 ;fraction = deltaY - (deltaX / 2);
 ;fraction = deltaY - (deltaX >> 1);
-    ld HL, (deltaX)
+    ld A, (deltaX)     ; load deltaX into register A
+    srl A              ; shift right to divide by 2
+    ld H, A            ; store the result in register H (deltaX / 2)
 
-    ; Shift deltaX right by 1 (HL >> 1)
-    srl H         ; Shift high byte to the right
-    rr L          ; Rotate right through carry into low byte
+    ld A, (deltaY)     ; load deltaY into register A
+    sub H              ; subtract (deltaX / 2)
+    ld (fraction), A   ; store the result in fraction
 
-    ; Store shifted deltaX in DE for subtraction
-    ;optimize out the next two steps
-    ;ld D, H
-    ;ld E, L
-    ex de, hl
 
-    ; Load deltaY into HL
-    ld HL, (deltaY)
+;<<<<<<    WORKING ON      >>>>>>
 
-    ; Subtract (deltaX >> 1) from deltaY
-    or A                        ; Clear the carry flag
-    sbc HL, DE                  ; Subtract DE from HL with carry
 
-    ; Store the result in fraction
-    LD (fraction), HL
+
+
+
+;<<<<<<    STOP      >>>>>>
 
 
 ;for (iterations = 0; iterations <= steps; iterations++)
@@ -37,24 +32,34 @@ jp dxLarger
 
 
 deltaX_iteration:
-    ;ld A, (iterations)         ; this probally can be optimized out
-    ld HL, (steps)              ; Load steps into H
-    cp L                        ; Compare iterations (A) with steps (L)
+    ld A, (steps)
+    ld H, A
+    ld A, (iterations)
+    cp H                        ; Compare iterations (A) with steps (H)
     jp z, deltaX_iteration_end  ; If iterations = steps, exit loop
+
+;<<<<<<    WORKING ON      >>>>>>
+
+
+;<<<<<<    STOP      >>>>>>
+
 
 DX_iteration_loop:
     ; Code for the loop body goes here
 
     ;plot or point code goes here
-    ;buffer_plotX = line_x1;        line_x1
-    ;buffer_plotY = line_y1;        line_y1
-    ;buffer_plot();
-    ;buffer_point();
+
     ld A, (line_x1)
     ld (plot_x),A
     ld A, (line_y1)
     ld (plot_y),A
     call _joffa_pixel2
+    ;ATTENTION, need to rework, so that HL is _gfx_xy and save those cycles
+
+
+
+
+
 
 ;if (fraction >= 0)
     ld HL, (fraction)           ; Load fraction into HL
