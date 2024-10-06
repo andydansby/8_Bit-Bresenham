@@ -2,10 +2,10 @@ org $8080
 
 ;input variables
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-line_x1:	defb 0 		;$8080	line start point X
+line_x1:	defb 50 		;$8080	line start point X
 line_y1:	defb 0 		;$8082	line start point Y
-line_x2:	defb 5  	;$8084	line end point X
-line_y2:	defb 5  	;$8086	line end point Y
+line_x2:	defb 0  	;$8084	line end point X
+line_y2:	defb 0  	;$8086	line end point Y
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -49,14 +49,14 @@ X_PositionBits:
 defb 128,64,32,16,8,4,2,1
 
 
-;Bit 7: Sign Flag
-;Bit 6: Zero Flag
-;Bit 5: Not Used
-;Bit 4: Half Carry Flag
-;Bit 3: Not Used
-;Bit 2: Parity / Overflow Flag
-;Bit 1: Add / Subtract Flag
-;Bit 0: Carry Flag
+;Bit 7: Sign Flag               (S)
+;Bit 6: Zero Flag               (Z)
+;Bit 5: Not Used                (Y)
+;Bit 4: Half Carry Flag         (H)
+;Bit 3: Not Used                (X)
+;Bit 2: Parity / Overflow Flag  (P)
+;Bit 1: Add / Subtract Flag     (N)
+;Bit 0: Carry Flag              (C)
 ;S Z Y H X P N C
 
 

@@ -3,7 +3,7 @@ org $9200
 PUBLIC dxLarger
 dxLarger:
 
-jp dxLarger
+;jp dxLarger
 
 ;fraction = deltaY - (deltaX / 2);
 ;fraction = deltaY - (deltaX >> 1);
@@ -14,15 +14,6 @@ jp dxLarger
     ld A, (deltaY)     ; load deltaY into register A
     sub H              ; subtract (deltaX / 2)
     ld (fraction), A   ; store the result in fraction
-
-
-;<<<<<<    WORKING ON      >>>>>>
-
-
-
-
-
-;<<<<<<    STOP      >>>>>>
 
 
 ;for (iterations = 0; iterations <= steps; iterations++)
@@ -38,10 +29,6 @@ deltaX_iteration:
     cp H                        ; Compare iterations (A) with steps (H)
     jp z, deltaX_iteration_end  ; If iterations = steps, exit loop
 
-;<<<<<<    WORKING ON      >>>>>>
-
-
-;<<<<<<    STOP      >>>>>>
 
 
 DX_iteration_loop:
@@ -50,9 +37,9 @@ DX_iteration_loop:
     ;plot or point code goes here
 
     ld A, (line_x1)
-    ld (plot_x),A
+    ld (plot_x), A
     ld A, (line_y1)
-    ld (plot_y),A
+    ld (plot_y), A
     call _joffa_pixel2
     ;ATTENTION, need to rework, so that HL is _gfx_xy and save those cycles
 
@@ -62,55 +49,124 @@ DX_iteration_loop:
 
 
 ;if (fraction >= 0)
-    ld HL, (fraction)           ; Load fraction into HL
+    ld A, (fraction)           ; Load fraction into A
     ; check to see if fraction is less than 0
-    ;ld A, H
-    ;or L
-    bit 7, H
+    bit 7, A
     jp m, DX_fraction_negative  ;check Sign flag
+
 
 ; only if fraction is Greater than 0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;inside IF
 ; fraction -= deltaX
     ;fraction is already in HL
-    ld DE, (deltaX)
-    xor A
-    sbc HL, DE
-    ld (fraction), HL
+    ;ld DE, (deltaX)
+    ;xor A
+    ;sbc HL, DE
+    ;ld (fraction), HL
+
+    ld A, (deltaX)
+    ld H, A
+    ld A, (fraction)
+    sub H
+    ld (fraction), A
+    ;;answer
+
+
+
+
+
+
+;<<<<<<    WORKING ON      >>>>>>
+
+
+
 
 ;line_y1 += stepY;
-    ld a, (stepY)
-    ld hl, (line_y1) ; Load line_y1 into HL
+    ;ld a, (stepY)
+    ;ld hl, (line_y1) ; Load line_y1 into HL
 
     ; Load stepY into E and clear D
-    ld e, a          ; Load stepY into E
-    xor a            ; clear D
-    ld d, a          ;
+    ;ld e, a          ; Load stepY into E
+    ;xor a            ; clear D
+    ;ld d, a          ;
 
-    add hl, de
-    ld (line_y1), hl    ;save answer
+    ;add hl, de
+    ;ld (line_y1), hl    ;save answer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;inside IF
+    ld A, (stepY)
+    ld H, A
+    ld A, (line_y1)
+    add A, H
+    ld (line_y1), A    ;save answer
+    ;answer
+
+;<<<<<<    STOP      >>>>>>
+    ;jp increase_deltaX_iterations; early out??? ATTENTION
+
+
+
 
 ;if fraction is less than 0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;outside IF
 DX_fraction_negative:
 ; line_x1 += stepX
-    xor A           ; set D to 0
-    ld D, A
-    ld A, (stepX)   ; Load stepX into E
-    ld E, A
-    ld HL, (line_x1); Load line_x1 into HL
-    add HL, DE
-    ld (line_x1), HL; answer
+    ;xor A           ; set D to 0
+    ;ld D, A
+    ;ld A, (stepX)   ; Load stepX into E
+    ;ld E, A
+    ;ld HL, (line_x1); Load line_x1 into HL
+    ;add HL, DE
+    ;ld (line_x1), HL; answer
+
+    ld A, (stepX)
+    ld H, A
+    ld A, (line_x1)
+    add A, H
+    ld (line_x1), A
+    ;answer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ;fraction += deltaY;
-    ld HL, (fraction)
-    ld DE, (deltaY)
-    add HL, DE
-    ld (fraction), HL
+    ;ld HL, (fraction)
+    ;ld DE, (deltaY)
+    ;add HL, DE
+    ;ld (fraction), HL
+
+    ld A, (fraction)
+    ld H, A
+    ld A, (deltaY)
+    add A, H
+    ld (fraction), A
+    ;answer
+
+
+
+
+
+
+
+
+
+
 
 ; iterations++
     ;increase iterations, place just before deltaX_iteration_end
+increase_deltaX_iterations:
     ld A, (iterations)      ; Load iterations into A
     inc A                   ; Increment iterations
     ld (iterations), A      ; Store the incremented value back to iterations
