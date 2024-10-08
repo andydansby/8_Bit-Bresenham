@@ -39,7 +39,7 @@ calculate_deltaX:       ; #
 ;int stepX = (xx1 < xx2) ? 1 : -1;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 calculate_stepX:
-    or A                        ;clear carry flag
+;    or A                        ;clear carry flag
     ld A, H                     ;ld line_x1 into A
     cp L                        ;compare against line_x2
     jr c, stepX_positive
@@ -80,7 +80,7 @@ calculate_deltaY:       ; #
 ;int stepX = (xx1 < xx2) ? 1 : -1;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 calculate_stepY:
-    or A                        ;clear carry flag
+;    or A                        ;clear carry flag
     ld A, H                     ;ld line_x1 into A
     cp L                        ;compare against line_x2
     jr c, stepY_positive
@@ -104,7 +104,7 @@ dy_step_end:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;steps = max (deltaX,deltaY)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    xor A				;clear flags
+;    xor A				;clear flags
     ld A, (deltaY)
     ld H, A
     ld A, (deltaX)              ; load deltaX into register A
@@ -124,7 +124,7 @@ steps_answer:
     ; steps now contains the maximum of deltaX and deltaY
 
 DYorDY_start:
-	xor A				;clear flags
+;	xor A				;clear flags
 	ld A, (deltaX)
 	ld H, A
 	ld A, (deltaY)
